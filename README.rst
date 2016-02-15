@@ -18,7 +18,7 @@ Python PIDFile
     :target: https://pypi.python.org/pypi/python-pidfile/
 
 
-Python context processor for ensure once execution of program::
+Python context manager for manage pid files::
 
     from pidfile import pidfile
 
