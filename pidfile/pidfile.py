@@ -13,8 +13,8 @@ class PIDFile(object):
 
     def check_process(self, pid):
         try:
-            cmd1 = psutil.Process(pid).cmdline()[1]
-            cmd2 = self.__process.cmdline()[1]
+            cmd1 = psutil.Process(pid).cmdline()[:1]
+            cmd2 = self.__process.cmdline()[:1]
             return cmd1 != cmd2
         except psutil.AccessDenied:
             return False
