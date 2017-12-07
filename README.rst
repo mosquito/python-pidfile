@@ -18,13 +18,13 @@ Python PIDFile
     :target: https://pypi.python.org/pypi/python-pidfile/
 
 
-Python context manager for manage pid files::
+Python context manager for manage pid files:
 
-    from pidfile import pidfile
+.. code-block:: python
+
+    from pidfile import PIDFile
 
     if __name__ == "__main__":
         
         with PIDFile("/var/run/myprogram.pid"):
-            pass
-
-
+            print('Hello world')
