@@ -55,6 +55,7 @@ setup(
             'pylama',
             'pytest',
             'pytest-cov',
+            'mock',
         ],
     }
 )
