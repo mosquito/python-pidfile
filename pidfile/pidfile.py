@@ -11,15 +11,15 @@ class PIDFile(object):
         self.__checked = None
         self.__process = psutil.Process(os.getppid())
 
-    def check_process(self, pid):
+    def check_process_cmd_line(self, pid):
         try:
             cmd1 = psutil.Process(pid).cmdline()[:1]
             cmd2 = self.__process.cmdline()[:1]
-            return cmd1 != cmd2
+            return cmd1 == cmd2
         except psutil.AccessDenied:
             return False
 
-    def check_pid(self):
+    def check_pid_is_running(self):
         """
         Returns `True` if process which created pid-file is
         already dead or has different script name.
@@ -40,10 +40,10 @@ class PIDFile(object):
         except OSError:
             return True
 
-        return self.check_process(pid)
+        return self.check_process_cmd_line(pid)
 
     def __enter__(self):
-        result = self.check_pid()
+        result = self.check_pid_is_running()
 
         if not result:
             raise RuntimeError("Program already running.")
