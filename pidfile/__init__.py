@@ -1,14 +1,7 @@
-import os
-
-author_info = (
-    ("Dmitry Orlov", "me@mosquito.su"),
-)
-
-version_info = (1, 0, 3)
-
-__version__ = ".".join(map(str, version_info))
-__author__ = ", ".join("{0} <{1}>".format(*author) for author in author_info)
-
 from .pidfile import PIDFile
+from .version import version_info, __version__, __author__, author_info
 
-__all__ = ('PIDFile',)
+__all__ = (
+    '__version__', '__author__', 'author_info',
+    'version_info', 'PIDFile',
+)
