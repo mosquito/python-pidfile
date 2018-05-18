@@ -1,63 +1,49 @@
 import os
-
 import psutil
 
 
+class AlreadyRunningError(Exception):
+    pass
+
+
 class PIDFile(object):
-    __slots__ = ('__file', '__checked', '__process')
+    def __init__(self, filename='pidfile'):
+        self._process_name = psutil.Process(os.getpid()).cmdline()[0]
+        self._file = filename
 
-    def __init__(self, pid_file):
-        self.__file = pid_file
-        self.__checked = None
-        self.__process = psutil.Process(os.getppid())
+    @property
+    def is_running(self):
+        if not os.path.exists(self._file):
+            return False
 
-    def check_process_cmd_line(self, pid):
+        with open(self._file, "r") as f:
+            try:
+                pid = int(f.read())
+            except Exception:
+                return False
+
+        if not psutil.pid_exists(pid):
+            return False
+
         try:
-            cmd1 = psutil.Process(pid).cmdline()[:1]
-            cmd2 = self.__process.cmdline()[:1]
-            return cmd1 == cmd2
+            cmd1 = psutil.Process(pid).cmdline()[0]
+            return cmd1 == self._process_name
         except psutil.AccessDenied:
             return False
 
-    def check_pid_is_running(self):
-        """
-        Returns `True` if process which created pid-file is
-        already dead or has different script name.
-
-        :return: bool
-        """
-        if not os.path.exists(self.__file):
-            return True
-
-        with open(self.__file, "r") as f:
-            try:
-                pid = int(f.read().strip())
-            except Exception:
-                return True
-
-        try:
-            os.kill(pid, 0)
-        except OSError:
-            return True
-
-        return self.check_process_cmd_line(pid)
-
     def __enter__(self):
-        result = self.check_pid_is_running()
+        if self.is_running:
+            raise AlreadyRunningError
 
-        if not result:
-            raise RuntimeError("Program already running.")
-
-        with open(self.__file, "w+") as f:
+        with open(self._file, "w") as f:
             f.write(str(os.getpid()))
-            f.flush()
+
+        return self
 
     def __exit__(self, *args):
-        if self.__checked and os.path.exists(self.__file):
+        if os.path.exists(self._file):
             try:
-                os.unlink(self.__file)
+                os.remove(self._file)
             except Exception:
                 pass
 
-
-__all__ = ("PIDFile",)
