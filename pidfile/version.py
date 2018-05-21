@@ -1,5 +1,8 @@
 author_info = (
     ("Dmitry Orlov", "me@mosquito.su"),
+    ("Costantino Grana", ""),
+    ("Lorenzo Baraldi", ""),
+    ("Michele Cancilla", ""),
 )
 
 version_info = (2, 0, 0)
