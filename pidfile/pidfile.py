@@ -19,7 +19,7 @@ class PIDFile(object):
         with open(self._file, "r") as f:
             try:
                 pid = int(f.read())
-            except Exception:
+            except (OSError, ValueError) as e:
                 return False
 
         if not psutil.pid_exists(pid):
@@ -44,5 +44,5 @@ class PIDFile(object):
         if os.path.exists(self._file):
             try:
                 os.remove(self._file)
-            except Exception:
+            except OSError:
                 pass
