@@ -46,4 +46,3 @@ class PIDFile(object):
                 os.remove(self._file)
             except Exception:
                 pass
-
