@@ -28,7 +28,7 @@ setup(
     url="https://github.com/mosquito/python-pidfile",
     license="MIT",
     description="PIDFile context processor. Supported py2 and py3",
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     platforms="unix",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
