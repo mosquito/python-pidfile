@@ -19,7 +19,7 @@ class PIDFile(object):
         with open(self._file, "r") as f:
             try:
                 pid = int(f.read())
-            except (OSError, ValueError) as e:
+            except (OSError, ValueError):
                 return False
 
         if not psutil.pid_exists(pid):
