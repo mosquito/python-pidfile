@@ -1,13 +1,13 @@
 from unittest import TestCase
 
 try:
-    # Python 2.7
-    from mock import patch, mock_open
-    open_name = '__builtin__.open'
-except ImportError:
     # Python 3.x
     from unittest.mock import patch, mock_open
     open_name = 'builtins.open'
+except ImportError:
+    # Python 2.7
+    from mock import patch, mock_open
+    open_name = '__builtin__.open'
 
 import pidfile
 import os
