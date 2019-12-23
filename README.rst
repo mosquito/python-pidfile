@@ -5,7 +5,6 @@ Python PIDFile
    :target: https://travis-ci.org/CostantinoGrana/python-pidfile
    :alt: Build Status
 
-
 .. image:: https://img.shields.io/pypi/v/python-pidfile.svg
    :target: https://pypi.python.org/pypi/python-pidfile/
    :alt: Latest Version
