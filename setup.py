@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# encoding: utf-8
 import sys
 import os
 from setuptools import setup, find_packages
@@ -41,6 +39,8 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: CPython',
         'License :: OSI Approved :: MIT License',
     ],
@@ -52,7 +52,7 @@ setup(
         'develop': [
             'coverage!=4.3',
             'coveralls',
-            'pylama',
+            'pylava',
             'pytest',
             'pytest-cov',
             'mock',
