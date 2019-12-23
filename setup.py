@@ -22,11 +22,13 @@ setup(
     name='python-pidfile',
     version=version.__version__,
     author=version.__author__,
-    author_email=", ".join(map(lambda x: x[1], version.author_info)),
+    author_email=", ".join(
+        filter(None, map(lambda x: x[1], version.author_info))
+    ),
     url="https://github.com/mosquito/python-pidfile",
     license="MIT",
     description="PIDFile context processor. Supported py2 and py3",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     platforms="unix",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
