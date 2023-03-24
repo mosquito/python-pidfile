@@ -54,7 +54,7 @@ setup(
         'develop': [
             'coverage!=4.3',
             'coveralls',
-            'pylava',
+            'pylama',
             'pytest',
             'pytest-cov',
             'mock',
