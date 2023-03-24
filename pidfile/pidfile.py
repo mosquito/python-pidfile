@@ -1,5 +1,7 @@
 import atexit
 import os
+from typing import Any
+
 import psutil
 
 
@@ -8,12 +10,12 @@ class AlreadyRunningError(Exception):
 
 
 class PIDFile(object):
-    def __init__(self, filename='pidfile'):
+    def __init__(self, filename: Any = "pidfile"):
         self._process_name = psutil.Process(os.getpid()).cmdline()[0]
-        self._file = filename
+        self._file = str(filename)
 
     @property
-    def is_running(self):
+    def is_running(self) -> bool:
         if not os.path.exists(self._file):
             return False
 
@@ -32,14 +34,14 @@ class PIDFile(object):
         except psutil.AccessDenied:
             return False
 
-    def close(self):
+    def close(self) -> None:
         if os.path.exists(self._file):
             try:
                 os.unlink(self._file)
             except OSError:
                 pass
 
-    def __enter__(self):
+    def __enter__(self) -> "PIDFile":
         if self.is_running:
             raise AlreadyRunningError
 
@@ -50,6 +52,6 @@ class PIDFile(object):
 
         return self
 
-    def __exit__(self, *args):
+    def __exit__(self, *_) -> None:
         self.close()
         atexit.unregister(self.close)

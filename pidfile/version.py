@@ -5,7 +5,7 @@ author_info = (
     ("Michele Cancilla", None),
 )
 
-version_info = (3, 1, 0)
+version_info = (3, 1, 1)
 
 __version__ = ".".join(map(str, version_info))
 __author__ = ", ".join("{0} <{1}>".format(*author) for author in author_info)
