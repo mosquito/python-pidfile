@@ -1,3 +1,4 @@
+import atexit
 import os
 import psutil
 
@@ -31,6 +32,13 @@ class PIDFile(object):
         except psutil.AccessDenied:
             return False
 
+    def close(self):
+        if os.path.exists(self._file):
+            try:
+                os.unlink(self._file)
+            except OSError:
+                pass
+
     def __enter__(self):
         if self.is_running:
             raise AlreadyRunningError
@@ -38,11 +46,10 @@ class PIDFile(object):
         with open(self._file, "w") as f:
             f.write(str(os.getpid()))
 
+        atexit.register(self.close)
+
         return self
 
     def __exit__(self, *args):
-        if os.path.exists(self._file):
-            try:
-                os.remove(self._file)
-            except OSError:
-                pass
+        self.close()
+        atexit.unregister(self.close)
