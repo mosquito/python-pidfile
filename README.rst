@@ -1,9 +1,9 @@
 Python PIDFile
 ==============
 
-.. image:: https://travis-ci.org/CostantinoGrana/python-pidfile.svg?branch=master
-   :target: https://travis-ci.org/CostantinoGrana/python-pidfile
-   :alt: Build Status
+.. image:: https://github.com/mosquito/python-pidfile/actions/workflows/tests.yml/badge.svg
+   :target: https://github.com/mosquito/python-pidfile/actions/workflows/tests.yml
+   :alt: Github Actions
 
 .. image:: https://img.shields.io/pypi/v/python-pidfile.svg
    :target: https://pypi.python.org/pypi/python-pidfile/
