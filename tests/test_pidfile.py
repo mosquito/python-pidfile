@@ -1,10 +1,6 @@
+import os
 from unittest import TestCase
 from unittest.mock import mock_open, patch
-
-
-open_name = "builtins.open"
-
-import os
 
 import psutil
 
@@ -35,14 +31,14 @@ def open_patcher_exception():
 
 
 class PIDFileTestCase(TestCase):
-    @patch(open_name, new=open_patcher("1"))
+    @patch("builtins.open", new=open_patcher("1"))
     @patch("os.path.exists")
     def test_pidfile_not_exists(self, exists_mock):
         exists_mock.return_value = False
         with pidfile.PIDFile():
             assert True
 
-    @patch(open_name, new=open_patcher("1"))
+    @patch("builtins.open", new=open_patcher("1"))
     @patch("psutil.pid_exists")
     @patch("psutil.Process")
     @patch("os.path.exists")
@@ -57,7 +53,7 @@ class PIDFileTestCase(TestCase):
             with pidfile.PIDFile():
                 assert True
 
-    @patch(open_name, new=open_patcher("1"))
+    @patch("builtins.open", new=open_patcher("1"))
     @patch("psutil.pid_exists")
     @patch("os.path.exists")
     def test_pidfile_exists_process_not_running(
@@ -69,7 +65,7 @@ class PIDFileTestCase(TestCase):
         with pidfile.PIDFile():
             assert True
 
-    @patch(open_name, new=open_patcher(""))
+    @patch("builtins.open", new=open_patcher(""))
     @patch("psutil.pid_exists")
     @patch("os.path.exists")
     def test_pidfile_exists_empty(self, exists_mock, pid_exists_mock):
@@ -78,7 +74,7 @@ class PIDFileTestCase(TestCase):
         with pidfile.PIDFile():
             assert True
 
-    @patch(open_name, new=open_patcher_exception())
+    @patch("builtins.open", new=open_patcher_exception())
     @patch("psutil.pid_exists")
     @patch("os.path.exists")
     def test_pidfile_exists_read_fail(self, exists_mock, pid_exists_mock):
